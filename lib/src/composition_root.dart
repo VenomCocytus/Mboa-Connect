@@ -2,6 +2,7 @@ import 'package:chat/chat.dart';
 import 'package:mboa_connect/src/cache/local_cache_contract.dart';
 import 'package:mboa_connect/src/models/view/chats_view_model.dart';
 import 'package:mboa_connect/src/repositories/chat_repository/chat_repository_contract.dart';
+import 'package:mboa_connect/src/states_management/group_message/group_message_bloc.dart';
 import 'package:mboa_connect/src/states_management/home/chats_cubit.dart';
 import 'package:mboa_connect/src/states_management/message/message_bloc.dart';
 import 'package:mboa_connect/src/states_management/typing/typing_notification_bloc.dart';
@@ -21,7 +22,7 @@ class CompositionRoot {
   static TypingNotificationBloc _typingNotificationBloc;
   static ChatsCubit _chatsCubit;
   static IGroupService _iGroupService;
-
+  static GroupMessageBloc groupMessageBloc;
 
   static ChatsViewModel _chatsViewModel;
 

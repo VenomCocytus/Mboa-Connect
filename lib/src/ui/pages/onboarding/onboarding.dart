@@ -9,7 +9,7 @@ import '../../../states_management/onboarding/onboarding_cubit.dart';
 import '../../../states_management/onboarding/onboarding_state.dart';
 import '../../widgets/onboarding/logo.dart';
 import '../../widgets/shared/custom_text_field.dart';
-import 'onboarding_router_contract.dart';
+import 'onboarding_router.dart';
 
 class Onboarding extends StatefulWidget {
   final IOnboardingRouter iOnboardingRouter;
