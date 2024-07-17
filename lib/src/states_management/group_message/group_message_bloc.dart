@@ -14,7 +14,6 @@ class GroupMessageBloc extends Bloc<GroupMessageEvent, GroupMessageState> {
   final IGroupService _iGroupService;
   StreamSubscription? _streamSubscription;
 
-  @override
   Stream<GroupMessageState> mapEventToState(GroupMessageEvent groupMessageEvent) async* {
     if(groupMessageEvent is Subscribe) {
       await _streamSubscription?.cancel();
