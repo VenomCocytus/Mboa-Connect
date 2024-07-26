@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mboa_connect/src/cache/local_cache.dart';
 import 'package:mboa_connect/src/cache/local_cache_contract.dart';
 import 'package:mboa_connect/src/factories/database_factory.dart';
+import 'package:mboa_connect/src/models/data/chat.dart';
 import 'package:mboa_connect/src/models/view/chat_view_model.dart';
 import 'package:mboa_connect/src/models/view/chats_view_model.dart';
 import 'package:mboa_connect/src/repositories/chat_repository/chat_repository_contract.dart';
@@ -134,7 +135,7 @@ class CompositionRoot {
           BlocProvider(create: (BuildContext context) => receiptBloc)
         ],
         child: MessageThre
-    )
+    );
   }
 
 }

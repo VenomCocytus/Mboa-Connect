@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mboa_connect/src/ui/widgets/home/common/profile_image.dart';
+import 'package:mboa_connect/src/ui/widgets/common/profile_image.dart';
 
 class HeaderStatus extends StatelessWidget {
   final String username;
