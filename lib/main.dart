@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mboa_connect/src/composition_root.dart';
 import 'package:mboa_connect/styles/themes.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await CompositionRoot.configure();
+  await CompositionRoot.setup();
   final firstPage = CompositionRoot.start();
 
   runApp(MboaConnect(firstPage));

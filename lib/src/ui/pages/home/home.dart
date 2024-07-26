@@ -1,5 +1,4 @@
 import 'package:chat/chat.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mboa_connect/src/models/view/chats_view_model.dart';
@@ -9,6 +8,8 @@ import 'package:mboa_connect/src/states_management/home/home_cubit.dart';
 import 'package:mboa_connect/src/states_management/home/home_state.dart';
 import 'package:mboa_connect/src/states_management/message/message_bloc.dart';
 import 'package:mboa_connect/src/ui/pages/home/home_router.dart';
+import 'package:mboa_connect/src/ui/widgets/home/active/active_users.dart';
+import 'package:mboa_connect/src/ui/widgets/home/chats/chats_widget.dart';
 import 'package:mboa_connect/src/ui/widgets/shared/header_status.dart';
 import 'package:mboa_connect/styles/colors.dart';
 
@@ -21,25 +22,30 @@ class Home extends StatefulWidget {
   const Home({required this.loggedUser, required this.iHomeRouter, required this.chatsViewModel});
 
   @override
-  _HomeState createdState() => _HomeState();
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
-  }
+  State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
 
-  User _loggedUser;
+  late User _loggedUser;
   List<User> _activeUsers = [];
 
   @override
-  void initializeState() {
-    super.initializeState();
+  void initState() {
+    super.initState();
     _loggedUser = widget.loggedUser;
     _setupConfiguration();
+  }
+
+  _setupConfiguration() async {
+
+    final loggedUser = (!_loggedUser.active!) ?
+        await context.read<HomeCubit>().login() : _loggedUser;
+
+    context.read<ChatsCubit>()..getChats();
+    context.read<HomeCubit>().logout(loggedUser);
+    context.read<MessageBloc>().add(MessageEvent.onSubscribe(loggedUser));
+    context.read<GroupMessageBloc>().add(GroupMessageEvent.onSubscribe(loggedUser));
   }
 
   @override
@@ -49,7 +55,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: HeaderStatus(_user.username, _user.photoUrl, true),
+          title: HeaderStatus(_loggedUser.username ?? '', _loggedUser.photoUrl ?? '', true),
           bottom: TabBar(
             indicatorPadding: EdgeInsets.only(top: 10.0, bottom: 10.0),
             tabs: [
@@ -88,8 +94,8 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
         ),
         body: TabBarView(
           children: [
-            Chats(_user, widget.router),
-            ActiveUsers(widget.router, _user),
+            ChatsWidget(_loggedUser, widget.iHomeRouter),
+            ActiveUsers(widget.iHomeRouter, _loggedUser),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -107,19 +113,5 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   }
 
   @override
-  bool get wantToKeepAlive => true;
-
-  _setupConfiguration() async {
-
-    final loggedUser = (!_loggedUser.active) ?
-        await context.read<HomeCubit>().login() : _loggedUser;
-
-    context.read<ChatsCubit>()..getChats();
-    context.read<HomeCubit>().logout(loggedUser);
-    context.read<MessageBloc>().add(MessageEvent.onSubscribe(loggedUser));
-    context.read<GroupMessageBloc>().add(GroupMessageEvent.onSubscribe(loggedUser));
-  }
-
-  @override
-  bool get wantKeepAlive => throw UnimplementedError();
+  bool get wantKeepAlive => true;
 }

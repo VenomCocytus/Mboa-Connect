@@ -14,9 +14,11 @@ class HeaderStatus extends StatelessWidget {
       this.photoUrl,
       this.online,
       {
-        required this.description,
-        required this.typingNotification
-      });
+        this.description = "",
+        this.typingNotification = "",
+      }
+  );
+
 
   @override
   Widget build(BuildContext context) {

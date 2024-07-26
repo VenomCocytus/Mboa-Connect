@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mboa_connect/src/ui/widgets/home/common/online_indicator.dart';
+import 'package:mboa_connect/src/ui/widgets/common/online_indicator.dart';
 import 'package:mboa_connect/styles/colors.dart';
 
 class ProfilePicture extends StatelessWidget {
